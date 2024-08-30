@@ -60,7 +60,7 @@ const Settings = ({ user }) => {
             setEnableTriggerLoading(true);
             const idToken = await auth.currentUser.getIdToken(true);
             const data = {
-                username: "abishkpatil",
+                username: user.email.split("@")[0],
             };
             const response = await axios.post(`https://ec0a52f5-b2bf-4b82-8567-1490689ccb58-00-3n71ekg2avu7v.sisko.replit.dev/enabletrigger`, data, {
                 headers: {
