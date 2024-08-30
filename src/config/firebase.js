@@ -119,3 +119,22 @@ export const getUserDetailsByUid = async (uid) => {
         return null;
     }
 }
+
+export const getUserDetailsByUsername = async (username) => {
+    try {
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("username", "==", username));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            return userDoc.data(); 
+        } else {
+            console.log("User does not exist.");
+            return null; 
+        }
+    } catch (error) {
+        console.error("Error getting user details:", error);
+        return null;
+    }
+}

@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SettingsAttribute from "../components/SettingsAttribute";
-import { auth, getUserDetailsByUid } from "../config/firebase";
+import { auth, getUserDetailsByUid, getUserDetailsByUsername } from "../config/firebase";
 import axios from "axios";
 import { Audio } from 'react-loader-spinner';
 import SmallButton from "../components/SmallButton";
@@ -57,7 +57,7 @@ const Settings = ({ user }) => {
         };
 
         const checkTriggerStats = async () => {
-            const res = getUserDetailsByUid(user.email.split("@")[0])
+            const res = getUserDetailsByUsername(user.email.split("@")[0])
             setEnableTrigger(res.gmailTriggerEnabled)
         }
 
