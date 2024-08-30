@@ -58,7 +58,7 @@ const Settings = ({ user }) => {
 
         const checkTriggerStats = async () => {
             const res = getUserDetailsByUid(user.email.split("@")[0])
-            setEnableTrigger(res.sheetAccountConnected)
+            setEnableTrigger(res.gmailTriggerEnabled)
         }
 
         checkConnectionStatus("GMAIL", setGmailAccount);
