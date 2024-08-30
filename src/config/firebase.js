@@ -51,6 +51,7 @@ export const addUserData = async (uid, username) => {
             username: username,
             gmailAccountConnected: false,
             sheetAccountConnected: false,
+            gmailTriggerEnabled: false,
             sheetsConfig: {
                 spreadsheet_id: "",
                 sheetName: "Sheet1",
