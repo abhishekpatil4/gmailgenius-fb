@@ -56,8 +56,14 @@ const Settings = ({ user }) => {
             }
         };
 
+        const checkTriggerStats = async () => {
+            const res = getUserDetailsByUid(user.email.split("@")[0])
+            setEnableTrigger(res.sheetAccountConnected)
+        }
+
         checkConnectionStatus("GMAIL", setGmailAccount);
         checkConnectionStatus("GOOGLESHEETS", setSheetsAccount);
+        checkTriggerStats();
         setUsername(user.email.split("@")[0]);
         fetchUserDetails();
     }, [user.email, user.uid]);
@@ -133,7 +139,7 @@ const Settings = ({ user }) => {
         <SettingsAttribute type="username" displayName="Composio Account" value={username} linkAction={() => { }} loading={false} />
         <SettingsAttribute type="gmail" displayName="Gmail Account" value={gmailAccount} linkAction={linkGmailAccount} loading={gmailAccountLoading} />
         <SettingsAttribute type="sheets" displayName="Sheets Account" value={sheetsAccount} linkAction={linkSheetsAccount} loading={sheetsAccountLoading} />
-        <SettingsAttribute type="trigger" displayName="Enable Trigger" value={enableTrigger} linkAction={enableTriggerFun} loading={enableTriggerLoading} buttonName="Enable"/>
+        <SettingsAttribute type="trigger" displayName="Enable Trigger" value={enableTrigger} linkAction={enableTriggerFun} loading={enableTriggerLoading} buttonName="Enable" />
         <br />
         <SettingsAttribute type="sheetid" displayName="Sheet ID" value={userDetails?.sheetsConfig?.spreadsheet_id || "No sheet ID"} linkAction={() => {
             if (userDetails?.sheetsConfig?.spreadsheet_id) {
