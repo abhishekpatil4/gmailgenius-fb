@@ -109,10 +109,10 @@ export const getUserDetailsByUid = async (uid) => {
 
         if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
-            return userDoc.data(); 
+            return userDoc.data();
         } else {
             console.log("User does not exist.");
-            return null; 
+            return null;
         }
     } catch (error) {
         console.error("Error getting user details:", error);
@@ -120,7 +120,7 @@ export const getUserDetailsByUid = async (uid) => {
     }
 }
 
-export const getUserDetailsByUsername = async (username) => {
+export const getTriggerStatus = async (username) => {
     try {
         const usersRef = collection(db, "users");
         const q = query(usersRef, where("username", "==", username));
@@ -128,13 +128,14 @@ export const getUserDetailsByUsername = async (username) => {
 
         if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
-            return userDoc.data(); 
+            const triggerStatus = userDoc.data().gmailTriggerEnabled;
+            return triggerStatus;
         } else {
             console.log("User does not exist.");
-            return null; 
+            return null;
         }
     } catch (error) {
-        console.error("Error getting user details:", error);
+        console.error("Error getting trigger status:", error);
         return null;
     }
 }

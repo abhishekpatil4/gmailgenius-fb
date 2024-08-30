@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SettingsAttribute from "../components/SettingsAttribute";
-import { auth, getUserDetailsByUid, getUserDetailsByUsername } from "../config/firebase";
+import { auth, getUserDetailsByUid, getTriggerStatus } from "../config/firebase";
 import axios from "axios";
 import { Audio } from 'react-loader-spinner';
 import SmallButton from "../components/SmallButton";
@@ -57,8 +57,8 @@ const Settings = ({ user }) => {
         };
 
         const checkTriggerStats = async () => {
-            const res = getUserDetailsByUsername(user.email.split("@")[0])
-            setEnableTrigger(res.gmailTriggerEnabled)
+            const res = await getTriggerStatus(user.email.split("@")[0])
+            setEnableTrigger(res)
         }
 
         checkConnectionStatus("GMAIL", setGmailAccount);
@@ -136,7 +136,7 @@ const Settings = ({ user }) => {
     const linkSheetsAccount = () => linkAccount("GOOGLESHEETS");
 
     return <div className="flex flex-1 flex-col gap-6 min-h-screen py-8 px-4 mx-auto mt-10 max-w-screen-md text-center lg:py-16 lg:px-12">
-        <SettingsAttribute type="username" displayName="Composio Account" value={username} linkAction={() => {alert("Account already connected")}} loading={false} />
+        <SettingsAttribute type="username" displayName="Composio Account" value={username} linkAction={() => { alert("Account already connected") }} loading={false} />
         <SettingsAttribute type="gmail" displayName="Gmail Account" value={gmailAccount} linkAction={linkGmailAccount} loading={gmailAccountLoading} />
         <SettingsAttribute type="sheets" displayName="Sheets Account" value={sheetsAccount} linkAction={linkSheetsAccount} loading={sheetsAccountLoading} />
         <SettingsAttribute type="trigger" displayName="Enable Trigger" value={enableTrigger} linkAction={enableTriggerFun} loading={enableTriggerLoading} buttonName="Enable" />
